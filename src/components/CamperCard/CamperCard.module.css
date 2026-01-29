@@ -1,0 +1,96 @@
+.card {
+  border: 1px solid rgba(218, 221, 225, 1);
+  border-radius: 20px;
+  background: #fff;
+  padding: 24px;
+  display: grid;
+  gap: 14px;
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(16, 24, 40, 1);
+}
+
+.metaRow {
+  margin-top: 6px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 14px;
+  color: rgba(71, 84, 103, 1);
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: 600;
+  color: rgba(16, 24, 40, 1);
+}
+
+.pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 100px;
+  background: rgba(242, 244, 247, 1);
+  color: rgba(16, 24, 40, 1);
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+}
+
+.desc {
+  margin: 0;
+  color: rgba(71, 84, 103, 1);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.moreBtn {
+  height: 44px;
+  padding: 0 24px;
+  border-radius: 200px;
+  border: none;
+  background: rgba(228, 72, 72, 1);
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.favBtn {
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(218, 221, 225, 1);
+  background: white;
+  cursor: pointer;
+  white-space: nowrap;
+}
