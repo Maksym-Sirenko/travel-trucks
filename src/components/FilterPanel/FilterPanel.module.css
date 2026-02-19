@@ -1,0 +1,108 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sectionTitle {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--color-scheme-text, #101828);
+}
+
+.label {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--color-scheme-text, #101828);
+}
+
+.input {
+  height: 48px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--color-scheme-border, rgba(16, 24, 40, 0.15));
+  background: var(--color-scheme-background, #fff);
+  color: var(--color-scheme-text, #101828);
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.chip {
+  width: 100%;
+  height: 96px;
+
+  border-radius: 12px;
+  border: 1px solid var(--color-scheme-border, rgba(16, 24, 40, 0.15));
+  background: var(--color-scheme-background, #fff);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  cursor: pointer;
+  color: var(--main, #101828);
+
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+}
+
+.chip:hover {
+  border-color: var(--button, #e44848);
+}
+
+.chipActive {
+  border-color: var(--button, #e44848);
+  background: rgba(228, 72, 72, 0.08);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--button, #e44848);
+  outline-offset: 2px;
+}
+
+.chipIcon {
+  display: block;
+}
+
+.chipText {
+  font-size: 14px;
+  line-height: 1.2;
+  text-align: center;
+  color: inherit;
+  text-transform: none;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+}
+.actions > * {
+  flex: 1;
+}
+
+@media (max-width: 480px) {
+  .actions {
+    flex-direction: column;
+  }
+}

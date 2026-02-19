@@ -1,0 +1,46 @@
+.list {
+  display: grid;
+  gap: 16px;
+}
+
+.item {
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.head {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: #f2f4f7;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+
+.info {
+  display: grid;
+  gap: 4px;
+}
+
+.name {
+  font-size: 16px;
+}
+
+.stars {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.text {
+  margin: 0;
+  opacity: 0.85;
+}

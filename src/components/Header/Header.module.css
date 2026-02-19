@@ -1,0 +1,42 @@
+.header {
+  width: 100%;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 64px;
+}
+
+
+.logoLink {
+  position: absolute;
+  left: 0;
+}
+
+.logo {
+  display: block;
+}
+
+.nav {
+  margin: 0 auto;
+  display: flex;
+  gap: 32px;
+}
+
+.link {
+  text-decoration: none;
+  color: rgba(16, 24, 40, 1);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.link:hover {
+  color: rgba(228, 72, 72, 1);
+}
+
+.active {
+  color: rgba(228, 72, 72, 1);
+}

@@ -1,0 +1,48 @@
+.title {
+  margin: 0 0 32px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 320px 888px;
+  gap: 32px;
+  align-items: start;
+}
+
+.sidebar {
+  width: 320px;
+}
+
+.list {
+  width: 888px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.loadingRow {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .sidebar,
+  .list {
+    width: 100%;
+  }
+}
+

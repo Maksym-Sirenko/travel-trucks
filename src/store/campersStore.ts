@@ -1,18 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Camper } from '@/types/camper';
-import type { CatalogFilters } from '@/types/filters';
-import { getCamperById, getCampers } from '@/services/api';
+
+import type { CatalogFilters } from '../types/filters';
+import { initialFilters } from '../types/filters';
+import type { Camper } from '../types/camper';
+import { fetchCampers, fetchCamperById } from '../lib/api/catalog';
 
 const DEFAULT_LIMIT = 4;
 
-const initialFilters: CatalogFilters = {
-  location: '',
-  bodyType: '',
-  features: [],
-};
-
-interface CampersState {
+type CampersState = {
   campers: Camper[];
   selectedCamper: Camper | null;
 
@@ -28,15 +24,16 @@ interface CampersState {
   error: string | null;
 
   setFilters: (next: Partial<CatalogFilters>) => void;
-  resetSearch: () => void;
+  resetFilters: () => void;
 
-  fetchCampers: () => Promise<void>;
+  fetchCampersList: () => Promise<void>;
   loadMore: () => Promise<void>;
-  fetchCamperById: (id: string) => Promise<void>;
+  fetchCamperDetails: (id: string) => Promise<void>;
+  applyFilters: (filters: CatalogFilters) => Promise<void>;
 
   toggleFavorite: (id: string) => void;
   isFavorite: (id: string) => boolean;
-}
+};
 
 export const useCampersStore = create<CampersState>()(
   persist(
@@ -55,36 +52,69 @@ export const useCampersStore = create<CampersState>()(
       isLoading: false,
       error: null,
 
-      setFilters: (next) => {
+      setFilters: (next) =>
         set((state) => ({
           filters: { ...state.filters, ...next },
-        }));
-      },
+        })),
 
-      resetSearch: () => {
+      resetFilters: () =>
         set({
+          filters: initialFilters,
           campers: [],
           page: 1,
           total: 0,
           hasMore: true,
           error: null,
-        });
-      },
+        }),
 
-      fetchCampers: async () => {
+      fetchCampersList: async () => {
         const { filters, page, limit } = get();
         set({ isLoading: true, error: null });
 
         try {
-          const data = await getCampers(filters, page, limit);
+          const data = await fetchCampers(filters, page, limit);
           set({
-            campers: data.items,
-            total: data.total,
-            hasMore: data.items.length < data.total,
+            campers: data.items ?? [],
+            total: data.total ?? 0,
+            hasMore: page * limit < (data.total ?? 0),
             isLoading: false,
           });
-        } catch {
-          set({ isLoading: false, error: 'Failed to load campers' });
+        } catch (e) {
+          set({
+            isLoading: false,
+            error: e instanceof Error ? e.message : 'Failed to load campers',
+            campers: [],
+          });
+        }
+      },
+
+      applyFilters: async (nextFilters) => {
+        set({
+          filters: nextFilters,
+          campers: [],
+          page: 1,
+          total: 0,
+          hasMore: true,
+          isLoading: true,
+          error: null,
+        });
+
+        try {
+          const { limit } = get();
+          const data = await fetchCampers(nextFilters, 1, limit);
+
+          set({
+            campers: data.items ?? [],
+            total: data.total ?? 0,
+            hasMore: limit < (data.total ?? 0),
+            isLoading: false,
+          });
+        } catch (e) {
+          set({
+            isLoading: false,
+            error: e instanceof Error ? e.message : 'Failed to apply filters',
+            campers: [],
+          });
         }
       },
 
@@ -96,33 +126,40 @@ export const useCampersStore = create<CampersState>()(
 
         try {
           const nextPage = page + 1;
-          const data = await getCampers(filters, nextPage, limit);
-          const updatedCampers = [...campers, ...data.items];
+          const data = await fetchCampers(filters, nextPage, limit);
+          const nextItems = data.items ?? [];
+          const updated = [...campers, ...nextItems];
 
           set({
-            campers: updatedCampers,
+            campers: updated,
             page: nextPage,
-            total: data.total,
-            hasMore: updatedCampers.length < data.total,
+            total: data.total ?? updated.length,
+            hasMore: updated.length < (data.total ?? updated.length),
             isLoading: false,
           });
-        } catch {
-          set({ isLoading: false, error: 'Failed to load more campers' });
+        } catch (e) {
+          set({
+            isLoading: false,
+            error: e instanceof Error ? e.message : 'Failed to load more campers',
+          });
         }
       },
 
-      fetchCamperById: async (id) => {
+      fetchCamperDetails: async (id) => {
         set({ isLoading: true, error: null, selectedCamper: null });
 
         try {
-          const data = await getCamperById(id);
+          const data = await fetchCamperById(id);
           set({ selectedCamper: data, isLoading: false });
-        } catch {
-          set({ isLoading: false, error: 'Failed to load camper details' });
+        } catch (e) {
+          set({
+            isLoading: false,
+            error: e instanceof Error ? e.message : 'Failed to load camper details',
+          });
         }
       },
 
-      toggleFavorite: (id) => {
+      toggleFavorite: (id) =>
         set((state) => {
           const exists = state.favorites.includes(id);
           return {
@@ -130,8 +167,7 @@ export const useCampersStore = create<CampersState>()(
               ? state.favorites.filter((favId) => favId !== id)
               : [...state.favorites, id],
           };
-        });
-      },
+        }),
 
       isFavorite: (id) => get().favorites.includes(id),
     }),
@@ -141,4 +177,11 @@ export const useCampersStore = create<CampersState>()(
     }
   )
 );
+
+
+
+
+
+
+
 

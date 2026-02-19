@@ -1,0 +1,123 @@
+.card {
+  
+  display: grid;
+  flex-direction: column;
+  gap: 14px;
+  background: #fff;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--main, #101828);
+}
+
+.subtitle {
+  margin: 0 0 6px 0;
+  color: rgba(16, 24, 40, 0.65);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border: 1px solid var(--gray-light, #dadde1);
+  border-radius: 12px;
+  padding: 18px;
+  outline: none;
+  font-size: 16px;
+  background: var(--inputs, #f7f7f7);
+}
+
+.textarea {
+  resize: none;
+  min-height: 114px;
+}
+
+.btn {
+  margin-top: 6px;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 14px;
+  background: #d84343;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dateWrap {
+  position: relative;
+  width: 100%;
+  border: 1px solid var(--gray-light, #dadde1);
+  border-radius: 12px;
+  background: var(--inputs, #f7f7f7);
+  padding: 0;
+  cursor: pointer;
+}
+
+.datePlaceholder {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(16, 24, 40, 0.55);
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.dateInput {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 18px;
+  font-size: 16px;
+  outline: none;
+  cursor: pointer;
+}
+
+.dateHasValue .datePlaceholder {
+  display: none;
+}
+
+.dateWrap:not(.dateHasValue) .dateInput {
+  color: transparent;
+  caret-color: transparent;
+}
+
+.dateHasValue .dateInput {
+  color: var(--main, #101828);
+  caret-color: auto;
+}
+
+.actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.submitBtn.submitBtn {
+  width: 166px;
+  min-width: 166px;
+}
+
+
+.dateField {
+  width: 100%;
+}
+
+.dateField,
+.dateField * {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 24px;
+  }
+}

@@ -1,96 +1,208 @@
 .card {
-  border: 1px solid rgba(218, 221, 225, 1);
-  border-radius: 20px;
-  background: #fff;
-  padding: 24px;
+  width: 100%;
+  max-width: 888px;
+
   display: grid;
-  gap: 14px;
+  grid-template-columns: 292px minmax(0, 1fr);
+  gap: 24px;
+
+  padding: 24px;
+  background: var(--white, #fff);
+  border: 1px solid var(--gray-light, #dadde1);
+  border-radius: 20px;
 }
 
-.top {
+.thumb {
+  width: 292px;
+  height: 320px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--inputs, #f7f7f7);
+}
+
+.image {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.content {
+  min-width: 0;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 12px;
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .title {
   margin: 0;
-  font-size: 20px;
+  min-width: 0;
+  flex: 1;
+
+  font-size: 24px;
   font-weight: 600;
-  color: rgba(16, 24, 40, 1);
+  line-height: 1.33;
+  color: var(--main, #101828);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.metaRow {
-  margin-top: 6px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  font-size: 14px;
-  color: rgba(71, 84, 103, 1);
-}
-
-.priceRow {
-  display: flex;
+.rightTop {
+  display: inline-flex;
   align-items: center;
   gap: 12px;
+  flex-shrink: 0;
 }
 
 .price {
-  font-size: 20px;
+  flex-shrink: 0;
+  font-size: 24px;
   font-weight: 600;
-  color: rgba(16, 24, 40, 1);
+  line-height: 1.33;
+  color: var(--main, #101828);
 }
 
-.pills {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.pill {
-  height: 32px;
-  padding: 0 12px;
-  border-radius: 100px;
-  background: rgba(242, 244, 247, 1);
-  color: rgba(16, 24, 40, 1);
-  display: inline-flex;
-  align-items: center;
-  font-size: 13px;
-}
-
-.desc {
-  margin: 0;
-  color: rgba(71, 84, 103, 1);
-  font-size: 14px;
-  line-height: 1.35;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-}
-
-.moreBtn {
-  height: 44px;
-  padding: 0 24px;
-  border-radius: 200px;
+.favBtn {
   border: none;
-  background: rgba(228, 72, 72, 1);
-  color: white;
+  background: transparent;
+  padding: 0;
+  line-height: 0;
   cursor: pointer;
-  text-decoration: none;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
-.favBtn {
-  height: 44px;
-  padding: 0 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(218, 221, 225, 1);
-  background: white;
-  cursor: pointer;
+.favBtn:focus-visible {
+  outline: 2px solid var(--button, #e44848);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.favSvg {
+  display: block;
+  color: var(--main, #101828);
+}
+
+.favActive {
+  color: var(--button, #e44848);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--main, #101828);
+}
+
+.dot {
+  opacity: 0.6;
+}
+
+.desc {
+  margin: 0;
+
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text, #475467);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.optionsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.optionItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 12px 18px;
+  border-radius: 100px;
+
+  background: var(--badges, #f2f4f7);
+  color: var(--main, #101828);
+
+  font-size: 16px;
+  line-height: 1;
+}
+
+.optionIcon {
+  display: block;
+}
+
+.optionLabel {
   white-space: nowrap;
 }
+
+.footer {
+  margin-top: 12px;
+}
+
+.moreBtn {
+  width: 166px;
+  height: 56px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 200px;
+  background: var(--button, #e44848);
+  color: var(--white, #fff);
+  text-decoration: none;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.moreBtn:hover {
+  background: var(--button-hover, #d84343);
+}
+
+@media (max-width: 1024px) {
+  .card {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+
+  .thumb {
+    width: 100%;
+  }
+
+  .moreBtn {
+    width: 100%;
+  }
+}
+
+
+
