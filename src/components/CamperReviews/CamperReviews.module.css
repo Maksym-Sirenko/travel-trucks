@@ -37,7 +37,17 @@
 
 .stars {
   font-size: 14px;
-  opacity: 0.9;
+  display: inline-flex;
+  gap: 0;
+  letter-spacing: 0.02em;
+}
+
+.starsFilled {
+  color: var(--rating, #ffc531);
+}
+
+.starsEmpty {
+  color: rgba(16, 24, 40, 0.35);
 }
 
 .text {

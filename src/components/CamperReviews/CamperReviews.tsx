@@ -12,10 +12,12 @@ type Props = {
 
 function Stars({ rating }: { rating: number }) {
   const full = Math.max(0, Math.min(5, Math.round(rating)));
+  const empty = 5 - full;
+
   return (
-    <span className={styles.stars}>
-      {'★★★★★'.slice(0, full)}
-      {'☆☆☆☆☆'.slice(0, 5 - full)}
+    <span className={styles.stars} aria-label={`${full} out of 5 stars`}>
+      <span className={styles.starsFilled}>{'★'.repeat(full)}</span>
+      <span className={styles.starsEmpty}>{'☆'.repeat(empty)}</span>
     </span>
   );
 }
@@ -23,16 +25,16 @@ function Stars({ rating }: { rating: number }) {
 export default function CamperReviews({ reviews }: Props) {
   return (
     <div className={styles.list}>
-      {reviews.map((r, idx) => (
-        <article key={`${r.reviewer_name}-${idx}`} className={styles.item}>
+      {reviews.map((review, idx) => (
+        <article key={`${review.reviewer_name}-${idx}`} className={styles.item}>
           <div className={styles.head}>
-            <div className={styles.avatar}>{r.reviewer_name.slice(0, 1).toUpperCase()}</div>
+            <div className={styles.avatar}>{review.reviewer_name.slice(0, 1).toUpperCase()}</div>
             <div className={styles.info}>
-              <div className={styles.name}>{r.reviewer_name}</div>
-              <Stars rating={r.reviewer_rating} />
+              <div className={styles.name}>{review.reviewer_name}</div>
+              <Stars rating={review.reviewer_rating} />
             </div>
           </div>
-          <p className={styles.text}>{r.comment}</p>
+          <p className={styles.text}>{review.comment}</p>
         </article>
       ))}
     </div>

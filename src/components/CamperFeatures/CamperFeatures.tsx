@@ -2,12 +2,14 @@
 
 import Icon from '@/components/ui/Icons/Icons';
 import { getCamperOptionItems } from '@/lib/ui/camperOptionItems';
+import { BODY_META } from '@/lib/ui/featureMeta';
 import type { Camper } from '@/types/camper';
 
 import styles from './CamperFeatures.module.css';
 
 export default function CamperFeatures({ camper }: { camper: Camper }) {
   const badges = getCamperOptionItems(camper);
+  const bodyLabel = camper.form ? BODY_META[camper.form].label : '';
 
   return (
     <div className={styles.panel}>
@@ -25,7 +27,7 @@ export default function CamperFeatures({ camper }: { camper: Camper }) {
       <div className={styles.table}>
         <div className={styles.row}>
           <span className={styles.k}>Form</span>
-          <span className={styles.v}>{camper.form}</span>
+          <span className={styles.v}>{bodyLabel}</span>
         </div>
 
         <div className={styles.row}>
