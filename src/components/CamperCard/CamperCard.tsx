@@ -140,5 +140,3 @@ export default function CamperCard({ camper }: Props) {
     </article>
   );
 }
-
-

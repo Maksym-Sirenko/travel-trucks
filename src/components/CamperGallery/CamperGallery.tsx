@@ -99,10 +99,20 @@ export default function CamperGallery({ gallery = [], alt = 'Camper photo' }: Pr
 
             {items.length > 1 ? (
               <>
-                <button type="button" className={styles.navLeft} onClick={prev} aria-label="Previous photo">
+                <button
+                  type="button"
+                  className={styles.navLeft}
+                  onClick={prev}
+                  aria-label="Previous photo"
+                >
                   ‹
                 </button>
-                <button type="button" className={styles.navRight} onClick={next} aria-label="Next photo">
+                <button
+                  type="button"
+                  className={styles.navRight}
+                  onClick={next}
+                  aria-label="Next photo"
+                >
                   ›
                 </button>
               </>
@@ -124,5 +134,3 @@ export default function CamperGallery({ gallery = [], alt = 'Camper photo' }: Pr
     </>
   );
 }
-
-

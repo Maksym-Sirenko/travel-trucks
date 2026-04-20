@@ -12,7 +12,12 @@ type Props = {
 
 function Stars({ rating }: { rating: number }) {
   const full = Math.max(0, Math.min(5, Math.round(rating)));
-  return <span className={styles.stars}>{'★★★★★'.slice(0, full)}{'☆☆☆☆☆'.slice(0, 5 - full)}</span>;
+  return (
+    <span className={styles.stars}>
+      {'★★★★★'.slice(0, full)}
+      {'☆☆☆☆☆'.slice(0, 5 - full)}
+    </span>
+  );
 }
 
 export default function CamperReviews({ reviews }: Props) {

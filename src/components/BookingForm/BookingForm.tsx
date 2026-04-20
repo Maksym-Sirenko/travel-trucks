@@ -63,7 +63,7 @@ export default function BookingForm({ camperName }: Props) {
     try {
       el.showPicker?.();
     } catch {
-      // Safari/Firefox можуть не мати showPicker
+      // Safari and Firefox may not support showPicker.
     }
   }
 
@@ -91,7 +91,13 @@ export default function BookingForm({ camperName }: Props) {
         required
       />
 
-      <div className={styles.dateWrap} onClick={openPicker} onKeyDown={(e) => e.key === 'Enter' && openPicker()} role="button" tabIndex={0}>
+      <div
+        className={styles.dateWrap}
+        onClick={openPicker}
+        onKeyDown={(e) => e.key === 'Enter' && openPicker()}
+        role="button"
+        tabIndex={0}
+      >
         {!form.date ? <span className={styles.datePlaceholder}>Booking date*</span> : null}
 
         <input
@@ -114,11 +120,16 @@ export default function BookingForm({ camperName }: Props) {
       />
 
       <div className={styles.actions}>
-        <Button type="submit" variant="primary" size="md" isLoading={isSending} className={styles.submitBtn}>
+        <Button
+          type="submit"
+          variant="primary"
+          size="md"
+          isLoading={isSending}
+          className={styles.submitBtn}
+        >
           {isSending ? 'Sending...' : 'Send'}
         </Button>
       </div>
     </form>
   );
 }
-
