@@ -103,7 +103,7 @@ public/
 The project expects the following environment variables:
 
 ```env
-MOCKAPI_BASE_URL=https://66b1f8e71ca8ad33d4f5f63e.mockapi.io
+MOCKAPI_BASE_URL=<your-api-base-url>
 NEXT_PUBLIC_API_URL=/api
 ```
 
@@ -122,7 +122,7 @@ npm install
 Create `.env` in the project root and add:
 
 ```env
-MOCKAPI_BASE_URL=https://66b1f8e71ca8ad33d4f5f63e.mockapi.io
+MOCKAPI_BASE_URL=<your-api-base-url>
 NEXT_PUBLIC_API_URL=/api
 ```
 
