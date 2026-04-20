@@ -3,6 +3,7 @@
 import type { BodyType, EngineType, FeatureKey, TransmissionType } from '@/types/filters';
 import { initialFilters } from '@/types/filters';
 import { useCampersStore } from '@/store/campersStore';
+import { BODY_META, ENGINE_META, FEATURE_META, TRANSMISSION_META } from '@/lib/ui/featureMeta';
 
 import Button from '@/components/ui/Button/Button';
 import Icon from '@/components/ui/Icons/Icons';
@@ -24,48 +25,11 @@ const BODY_TYPES: Exclude<BodyType, ''>[] = ['panelTruck', 'fullyIntegrated', 'a
 const TRANSMISSIONS: Exclude<TransmissionType, ''>[] = ['automatic', 'manual'];
 const ENGINES: Exclude<EngineType, ''>[] = ['petrol', 'diesel', 'hybrid'];
 
-const FEATURE_ICONS: Record<FeatureKey, string> = {
-  AC: 'icon-wind',
-  bathroom: 'icon-shower',
-  kitchen: 'icon-kitchen',
-  TV: 'icon-tv',
-  radio: 'icon-radio',
-  refrigerator: 'icon-fridge',
-  microwave: 'icon-microwave',
-  gas: 'icon-gas',
-  water: 'icon-water',
-};
-
 const BODY_ICONS: Record<Exclude<BodyType, ''>, string> = {
   panelTruck: 'icon-van',
   fullyIntegrated: 'icon-fully',
   alcove: 'icon-alcove',
 };
-
-const TRANSMISSION_ICONS: Record<Exclude<TransmissionType, ''>, string> = {
-  automatic: 'icon-automatic-gearbox',
-  manual: 'icon-manual-gearbox',
-};
-
-const ENGINE_ICONS: Record<Exclude<EngineType, ''>, string> = {
-  petrol: 'icon-petrol',
-  diesel: 'icon-disel',
-  hybrid: 'icon-hybrid',
-};
-
-function prettyLabel(value: string) {
-  const map: Record<string, string> = {
-    panelTruck: 'Van',
-    fullyIntegrated: 'Fully Integrated',
-    alcove: 'Alcove',
-    automatic: 'Automatic',
-    manual: 'Manual',
-    petrol: 'Petrol',
-    diesel: 'Diesel',
-    hybrid: 'Hybrid',
-  };
-  return map[value] ?? value;
-}
 
 export default function FilterPanel() {
   const filters = useCampersStore((s) => s.filters);
@@ -85,21 +49,23 @@ export default function FilterPanel() {
     setFilters({ bodyType: filters.bodyType === type ? '' : type });
   }
 
-  function toggleTransmission(t: Exclude<TransmissionType, ''>) {
-    setFilters({ transmission: filters.transmission === t ? '' : t });
+  function toggleTransmission(transmission: Exclude<TransmissionType, ''>) {
+    setFilters({
+      transmission: filters.transmission === transmission ? '' : transmission,
+    });
   }
 
-  function toggleEngine(e: Exclude<EngineType, ''>) {
-    setFilters({ engine: filters.engine === e ? '' : e });
+  function toggleEngine(engine: Exclude<EngineType, ''>) {
+    setFilters({ engine: filters.engine === engine ? '' : engine });
   }
 
   function onSearch() {
-  void applyFilters(filters);
-}
+    void applyFilters(filters);
+  }
 
-function onReset() {
-  void applyFilters(initialFilters);
-}
+  function onReset() {
+    void applyFilters(initialFilters);
+  }
 
   return (
     <div className={styles.panel}>
@@ -129,8 +95,8 @@ function onReset() {
                 className={`${styles.chip} ${active ? styles.chipActive : ''}`}
                 onClick={() => toggleFeature(feature)}
               >
-                <Icon name={FEATURE_ICONS[feature]} size={32} className={styles.chipIcon} />
-                <span className={styles.chipText}>{prettyLabel(feature)}</span>
+                <Icon name={FEATURE_META[feature].icon} size={32} className={styles.chipIcon} />
+                <span className={styles.chipText}>{FEATURE_META[feature].label}</span>
               </button>
             );
           })}
@@ -150,7 +116,7 @@ function onReset() {
                 onClick={() => toggleBodyType(type)}
               >
                 <Icon name={BODY_ICONS[type]} size={32} className={styles.chipIcon} />
-                <span className={styles.chipText}>{prettyLabel(type)}</span>
+                <span className={styles.chipText}>{BODY_META[type].label}</span>
               </button>
             );
           })}
@@ -160,17 +126,21 @@ function onReset() {
       <div className={styles.group}>
         <div className={styles.label}>Vehicle transmission</div>
         <div className={styles.grid2}>
-          {TRANSMISSIONS.map((t) => {
-            const active = filters.transmission === t;
+          {TRANSMISSIONS.map((transmission) => {
+            const active = filters.transmission === transmission;
             return (
               <button
-                key={t}
+                key={transmission}
                 type="button"
                 className={`${styles.chip} ${active ? styles.chipActive : ''}`}
-                onClick={() => toggleTransmission(t)}
+                onClick={() => toggleTransmission(transmission)}
               >
-                <Icon name={TRANSMISSION_ICONS[t]} size={32} className={styles.chipIcon} />
-                <span className={styles.chipText}>{prettyLabel(t)}</span>
+                <Icon
+                  name={TRANSMISSION_META[transmission].icon}
+                  size={32}
+                  className={styles.chipIcon}
+                />
+                <span className={styles.chipText}>{TRANSMISSION_META[transmission].label}</span>
               </button>
             );
           })}
@@ -180,17 +150,17 @@ function onReset() {
       <div className={styles.group}>
         <div className={styles.label}>Vehicle engine</div>
         <div className={styles.grid3}>
-          {ENGINES.map((e) => {
-            const active = filters.engine === e;
+          {ENGINES.map((engine) => {
+            const active = filters.engine === engine;
             return (
               <button
-                key={e}
+                key={engine}
                 type="button"
                 className={`${styles.chip} ${active ? styles.chipActive : ''}`}
-                onClick={() => toggleEngine(e)}
+                onClick={() => toggleEngine(engine)}
               >
-                <Icon name={ENGINE_ICONS[e]} size={32} className={styles.chipIcon} />
-                <span className={styles.chipText}>{prettyLabel(e)}</span>
+                <Icon name={ENGINE_META[engine].icon} size={32} className={styles.chipIcon} />
+                <span className={styles.chipText}>{ENGINE_META[engine].label}</span>
               </button>
             );
           })}
@@ -202,17 +172,16 @@ function onReset() {
           {isLoading ? 'Searching...' : 'Search'}
         </Button>
 
-        <Button type="button" variant="secondary" size="md" onClick={onReset} disabled={isLoading}>
+        <Button
+          type="button"
+          variant="secondary"
+          size="md"
+          onClick={onReset}
+          disabled={isLoading}
+        >
           Reset filters
         </Button>
       </div>
     </div>
   );
 }
-
-
-
-
-
-
-

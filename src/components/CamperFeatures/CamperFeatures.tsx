@@ -1,50 +1,21 @@
 'use client';
 
 import Icon from '@/components/ui/Icons/Icons';
-import { ENGINE_META, FEATURE_META, TRANSMISSION_META } from '@/lib/ui/featureMeta';
+import { getCamperOptionItems } from '@/lib/ui/camperOptionItems';
 import type { Camper } from '@/types/camper';
-import type { FeatureKey } from '@/types/filters';
 
 import styles from './CamperFeatures.module.css';
 
-const FEATURE_ORDER: FeatureKey[] = [
-  'kitchen',
-  'AC',
-  'bathroom',
-  'TV',
-  'radio',
-  'refrigerator',
-  'microwave',
-  'gas',
-  'water',
-];
-
-function isFeatureEnabled(camper: Camper, key: FeatureKey) {
-  return (camper as Record<string, unknown>)[key] === true;
-}
-
 export default function CamperFeatures({ camper }: { camper: Camper }) {
-  const badges: { icon: string; label: string; key: string }[] = [];
-
-  const tMeta = TRANSMISSION_META[camper.transmission];
-  if (tMeta) badges.push({ ...tMeta, key: `t-${camper.transmission}` });
-
-  const eMeta = ENGINE_META[camper.engine];
-  if (eMeta) badges.push({ ...eMeta, key: `e-${camper.engine}` });
-
-  for (const f of FEATURE_ORDER) {
-    if (!isFeatureEnabled(camper, f)) continue;
-    const meta = FEATURE_META[f];
-    if (meta) badges.push({ ...meta, key: `f-${f}` });
-  }
+  const badges = getCamperOptionItems(camper);
 
   return (
     <div className={styles.panel}>
       <ul className={styles.badges} aria-label="Camper features">
-        {badges.map((b) => (
-          <li key={b.key} className={styles.badge}>
-            <Icon name={b.icon} size={18} className={styles.badgeIcon} />
-            <span className={styles.badgeText}>{b.label}</span>
+        {badges.map((badge) => (
+          <li key={badge.key} className={styles.badge}>
+            <Icon name={badge.icon} size={18} className={styles.badgeIcon} />
+            <span className={styles.badgeText}>{badge.label}</span>
           </li>
         ))}
       </ul>

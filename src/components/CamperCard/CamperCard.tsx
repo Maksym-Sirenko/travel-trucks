@@ -4,9 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import Icon from '@/components/ui/Icons/Icons';
-import { ENGINE_META, FEATURE_META, TRANSMISSION_META } from '@/lib/ui/featureMeta';
+import { getCamperOptionItems } from '@/lib/ui/camperOptionItems';
 import type { Camper } from '@/types/camper';
-import type { FeatureKey } from '@/types/filters';
 
 import { useCampersStore } from '@/store/campersStore';
 
@@ -16,22 +15,6 @@ import { formatPrice } from '@/lib/utils/formatPrice';
 type Props = {
   camper: Camper;
 };
-
-const FEATURE_ORDER: FeatureKey[] = [
-  'kitchen',
-  'AC',
-  'bathroom',
-  'TV',
-  'radio',
-  'refrigerator',
-  'microwave',
-  'gas',
-  'water',
-];
-
-function isFeatureEnabled(camper: Camper, key: FeatureKey) {
-  return (camper as Record<string, unknown>)[key] === true;
-}
 
 function getFirstPhoto(camper: Camper): string {
   const first = (camper as unknown as { gallery?: unknown[] }).gallery?.[0];
@@ -51,19 +34,7 @@ function getFirstPhoto(camper: Camper): string {
 }
 
 function OptionsRow({ camper }: { camper: Camper }) {
-  const items: { icon: string; label: string; key: string }[] = [];
-
-  const tMeta = TRANSMISSION_META[camper.transmission];
-  if (tMeta) items.push({ ...tMeta, key: `t-${camper.transmission}` });
-
-  const eMeta = ENGINE_META[camper.engine];
-  if (eMeta) items.push({ ...eMeta, key: `e-${camper.engine}` });
-
-  for (const f of FEATURE_ORDER) {
-    if (!isFeatureEnabled(camper, f)) continue;
-    const meta = FEATURE_META[f];
-    if (meta) items.push({ ...meta, key: `f-${f}` });
-  }
+  const items = getCamperOptionItems(camper);
 
   return (
     <ul className={styles.optionsRow} aria-label="Camper options">
